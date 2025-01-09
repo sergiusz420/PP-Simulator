@@ -41,6 +41,7 @@ public class Creature
         Name = name;
         Level = level;
     }
+
     public Creature() { }
 
     public void SayHi() => Console.WriteLine($"Hi, I'm {Name}, my level is {Level}.");
@@ -54,7 +55,21 @@ public class Creature
             _level++;
         }
     }
-      
+
+    public void Go(Direction direction) => Console.WriteLine($"{Name} goes {direction.ToString().ToLower()}.");
+
+    public void Go(Direction[] directions)
+    {
+        foreach (var direction in directions)
+        {
+            Go(direction);
+        }
+    }
+
+    public void Go(string input)
+    {
+        Go(DirectionParser.Parse(input));
+    }
 }
     
 

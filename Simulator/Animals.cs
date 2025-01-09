@@ -1,7 +1,7 @@
 ﻿namespace Simulator;
 
 public class Animals
-    {
+{
         private string _description = ":D";
         
         public string Description 
@@ -21,10 +21,16 @@ public class Animals
                 }
 
                 _description = char.ToUpper(_description[0]) + _description.Substring(1);
+            }
         }
-    }
        
         public uint Size { get; set; } = 3;
-        public string Info => $"{Description} <{Size}>";
-    }
+
+        public virtual string Info => $"{Description} <{Size}>";
+
+        public  override string ToString()
+            {
+                return $"{GetType().Name.ToUpper()}: {Info}";
+            }
+}
 

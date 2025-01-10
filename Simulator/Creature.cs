@@ -44,7 +44,7 @@ public abstract class Creature
 
     public Creature() { }
 
-    public abstract void SayHi();
+    public abstract string Greeting();
 
     public abstract int Power {  get; }
 
@@ -63,19 +63,16 @@ public abstract class Creature
         }
     }
 
-    public void Go(Direction direction) => Console.WriteLine($"{Name} goes {direction.ToString().ToLower()}.");
+    public string Go(Direction direction) => $"{direction.ToString().ToLower()}";
 
-    public void Go(Direction[] directions)
+    public string[] Go(Direction[] directions)
     {
-        foreach (var direction in directions)
-        {
-            Go(direction);
-        }
+        return directions.Select(Go).ToArray();
     }
 
-    public void Go(string input)
+    public string[] Go(string input)
     {
-        Go(DirectionParser.Parse(input));
+        return Go(DirectionParser.Parse(input));
     }
 }
     

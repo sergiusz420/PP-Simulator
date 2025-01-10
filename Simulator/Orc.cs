@@ -18,9 +18,10 @@ public class Orc : Creature
 
     public Orc() { }
 
-    public override void SayHi()
+    public override string Greeting()
     {
-        Console.WriteLine($"Hi, I'm {Name}, my level is {Level}, my rage is {Rage}.");
+        string introduce = $"Hi, I'm {Name}, my level is {Level}, my agility is {Rage}.";
+        return introduce;
     }
 
     public override string Info => $"{Name} [{Level}][{Rage}]";

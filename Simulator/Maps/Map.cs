@@ -5,12 +5,33 @@
 /// </summary>
 public abstract class Map
 {
+    public int SizeX { get; }
+    public int SizeY { get; }
+
+    public Map(int sizeX, int sizeY) 
+    {
+        if (sizeX < 5 || sizeY < 5) throw new ArgumentOutOfRangeException("Minimalna wielkosc mapy to 5");
+        SizeX = sizeX;
+        SizeY = sizeY;
+    }
+
     /// <summary>
     /// Check if give point belongs to the map.
     /// </summary>
     /// <param name="p">Point to check.</param>
     /// <returns></returns>
-    public abstract bool Exist(Point p);
+    public virtual bool Exist(Point p)
+    {
+        var mapBounds = new Rectangle(0, 0, SizeX - 1, SizeY - 1);
+        if (mapBounds.Contains(p))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
     /// <summary>
     /// Next position to the point in a given direction.

@@ -1,30 +1,23 @@
 ﻿namespace Simulator.Maps;
 
-public class SmallSquareMap : Map
+public class SmallSquareMap : SmallMap
 {
-    public int Size { get; }
+    public readonly int Size;
 
-    public SmallSquareMap(int size)
+    public SmallSquareMap(int sizeX, int sizeY) : base(sizeX, sizeY)
     {
-        if (size < 5 || size >20)
-        {
-            throw new ArgumentOutOfRangeException("Mapa jest wielkosci od 5 do 20");
-        }
-        Size = size;
+       
     }
-    public override bool Exist(Point p)
-    {
-        return p.X >= 0 && p.X < Size && p.Y >= 0 && p.Y < Size;
-    }
+    
 
     public override Point Next(Point p, Direction d)
     {
         return d switch
         {
-            Direction.Up => new Point(p.X, (p.Y + 1) % Size),
-            Direction.Right => new Point((p.X + 1) % Size, p.Y),
-            Direction.Down => new Point(p.X, (p.Y - 1 + Size) % Size),
-            Direction.Left => new Point((p.X - 1 + Size) % Size, p.Y),
+            Direction.Up => new Point(p.X, (p.Y + 1) % SizeY),
+            Direction.Right => new Point((p.X + 1) % SizeX, p.Y),
+            Direction.Down => new Point(p.X, (p.Y - 1 + SizeY) % Size),
+            Direction.Left => new Point((p.X - 1 + SizeX) % Size, p.Y),
             _ => p
         };
     }

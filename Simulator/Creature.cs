@@ -70,10 +70,7 @@ public abstract class Creature
         return directions.Select(Go).ToArray();
     }
 
-    public string[] Go(string input)
-    {
-        return Go(DirectionParser.Parse(input));
-    }
+    public string[] Go(string input) => Go(DirectionParser.Parse(input).ToArray());
 }
     
 

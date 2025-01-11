@@ -8,8 +8,9 @@ public class SmallSquareMapTests
     public void TestConstructor_ValidSize_ShouldSetSize()
     {
         int size = 10;
-        var map = new SmallTorusMap(size);       
-        Assert.Equal(size, map.Size);
+        var map = new SmallTorusMap(size, size);       
+        Assert.Equal(size, map.SizeX);
+        Assert.Equal(size, map.SizeY);
     }
 
     [Theory]
@@ -20,7 +21,7 @@ public class SmallSquareMapTests
       (int size)
     {
         Assert.Throws<ArgumentOutOfRangeException>(() =>
-             new SmallTorusMap(size));
+             new SmallTorusMap(size, size));
     }
 
     [Theory]
@@ -31,7 +32,7 @@ public class SmallSquareMapTests
     public void TestExist_ShouldReturnCorrectValue(int x, int y,
     int size, bool expected)
     {
-        var map = new SmallTorusMap(size);
+        var map = new SmallTorusMap(size, size);
         var point = new Point(x, y);
         var result = map.Exist(point);
         Assert.Equal(expected, result);
@@ -45,7 +46,7 @@ public class SmallSquareMapTests
     public void TestNext_ShouldReturnCorrectNextPoint(int x, int y,
     Direction direction, int expectedX, int expectedY)
     {
-        var map = new SmallTorusMap(20);
+        var map = new SmallTorusMap(20, 20);
         var point = new Point(x, y);
         var nextPoint = map.Next(point, direction);
         Assert.Equal(new Point(expectedX, expectedY), nextPoint);
@@ -60,7 +61,7 @@ public class SmallSquareMapTests
     public void TestNextDiagonal_ShouldReturnCorrectNextPoint(int x, int y,
     Direction direction, int expectedX, int expectedY)
     {
-        var map = new SmallTorusMap(20);
+        var map = new SmallTorusMap(20, 20);
         var point = new Point(x, y);
         var nextPoint = map.NextDiagonal(point, direction);
         Assert.Equal(new Point(expectedX, expectedY), nextPoint);

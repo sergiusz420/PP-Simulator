@@ -11,22 +11,26 @@ public class Orc : Creature
         set => rage = Validator.Limiter(value, 0, 10);
     }
 
-    public Orc(string name, int level = 1, int agility = 0) : base(name, level)
+    public Orc(string name, int level = 1, int rage = 0 ) : base(name, level)
     {
-        Rage = agility;
+        Rage = rage;
     }
 
-    public Orc() { }
+    
+
+  
 
     public override string Greeting()
     {
-        string introduce = $"Hi, I'm {Name}, my level is {Level}, my agility is {Rage}.";
+        string introduce = $"Hi, I'm {Name}, my level is {Level}, my rage is {Rage}.";
         return introduce;
     }
 
     public override string Info => $"{Name} [{Level}][{Rage}]";
 
     public override int Power => (7 * Level) + (3 * Rage);
+
+    public Point Point { get; }
 
     public void Hunt()
     {

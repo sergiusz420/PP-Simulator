@@ -1,9 +1,10 @@
 ﻿namespace Simulator;
-
+using Simulator.Maps;
 public abstract class Creature
 {
     private string _name = "Unknown";
     private int _level = 1;
+    
 
     public string Name
     {
@@ -35,6 +36,7 @@ public abstract class Creature
             _level = _level > 10 ? 10 : _level;
         }
     }
+   
 
     public Creature(string name, int level = 1)
     {
@@ -63,14 +65,29 @@ public abstract class Creature
         }
     }
 
-    public string Go(Direction direction) => $"{direction.ToString().ToLower()}";
-
-    public string[] Go(Direction[] directions)
+    public Map? Map {  get; set; }
+    public Point Position { get; set; }
+    public string Go(Direction direction)
     {
-        return directions.Select(Go).ToArray();
+        if (Map == null)
+        {
+            return ("Brak przypisanej mapy");
+        }
+        var newPos = Position.Next(direction);
+        if (Map.Exist(newPos))
+        {
+            Map.Move(this, Position, newPos);
+            Position = newPos;  
+        }
+        return $"Poruszono {direction.ToString().ToLower()} do {newPos}.";
     }
 
-    public string[] Go(string input) => Go(DirectionParser.Parse(input).ToArray());
+    public void AssignMap(Map map, Point startPosition)
+    {
+        Map = map;
+        Position = startPosition;
+        map.Add(this, Position);
+    }
 }
     
 

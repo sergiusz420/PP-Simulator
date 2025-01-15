@@ -2,11 +2,12 @@
 
 public class SmallSquareMap : SmallMap
 {
-    public readonly int Size;
+    public int SizeX { get; }
+    public int SizeY { get; }
 
-    public SmallSquareMap(int sizeX, int sizeY) : base(sizeX, sizeY)
+    public SmallSquareMap(Point point) : base(point)
     {
-       
+        
     }
     
 
@@ -14,10 +15,10 @@ public class SmallSquareMap : SmallMap
     {
         return d switch
         {
-            Direction.Up => new Point(p.X, (p.Y + 1) % SizeY),
-            Direction.Right => new Point((p.X + 1) % SizeX, p.Y),
-            Direction.Down => new Point(p.X, (p.Y - 1 + SizeY) % Size),
-            Direction.Left => new Point((p.X - 1 + SizeX) % Size, p.Y),
+            Direction.Up => new Point(p.X, (p.Y + 1) % SizeX),
+            Direction.Right => new Point((p.X + 1) % SizeY, p.Y),
+            Direction.Down => new Point(p.X, (p.Y - 1 + SizeX) % SizeY),
+            Direction.Left => new Point((p.X - 1 + SizeY) % SizeX, p.Y),
             _ => p
         };
     }
@@ -26,10 +27,10 @@ public class SmallSquareMap : SmallMap
     {
         return d switch
         {
-            Direction.Up => new Point((p.X + 1) % Size, (p.Y + 1) % Size),           
-            Direction.Right => new Point((p.X + 1) % Size, (p.Y - 1 + Size) % Size), 
-            Direction.Down => new Point((p.X - 1 + Size) % Size, (p.Y - 1 + Size) % Size), 
-            Direction.Left => new Point((p.X - 1 + Size) % Size, (p.Y + 1) % Size), 
+            Direction.Up => new Point((p.X + 1) % SizeX, (p.Y + 1) % SizeY),
+            Direction.Right => new Point((p.X + 1) % SizeX, (p.Y - 1 + SizeY) % SizeX),
+            Direction.Down => new Point((p.X - 1 + SizeX) % SizeX, (p.Y - 1 + SizeY) % SizeY),
+            Direction.Left => new Point((p.X - 1 + SizeX) % SizeX, (p.Y + 1) % SizeY),
             _ => p
         };
     }

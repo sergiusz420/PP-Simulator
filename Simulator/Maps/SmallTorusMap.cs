@@ -4,11 +4,12 @@ namespace Simulator.Maps;
 public class SmallTorusMap : SmallMap
 {
 
-    public readonly int Size;
+    public int SizeX { get; }
+    public int SizeY { get; }
 
-    public SmallTorusMap(int sizeX, int sizeY) : base(sizeX, sizeY) 
+    public SmallTorusMap(Point point) : base(point)
     {
-       
+        
     }
 
 

@@ -4,7 +4,8 @@ public abstract class Creature
 {
     private string _name = "Unknown";
     private int _level = 1;
-    
+    private Map? _map = null;
+
 
     public string Name
     {
@@ -44,13 +45,25 @@ public abstract class Creature
         Level = level;
     }
 
-    public Creature() { }
+    
+
+    protected Creature() { }
 
     public abstract string Greeting();
 
     public abstract int Power {  get; }
 
     public abstract string Info { get; }
+
+
+
+    protected Creature(string name, int level = 1, Point? position = null, Map? map = null)
+    {
+        Name = name;
+        Level = level;
+        Position = position ?? new Point(0, 0);
+        Map = map;
+    }
 
     public override string ToString()
     {
@@ -65,29 +78,29 @@ public abstract class Creature
         }
     }
 
-    public Map? Map {  get; set; }
-    public Point Position { get; set; }
-    public string Go(Direction direction)
+    public Map? Map
     {
-        if (Map == null)
+        get => _map;
+        set
         {
-            return ("Brak przypisanej mapy");
+            _map ??= value;
         }
-        var newPos = Position.Next(direction);
-        if (Map.Exist(newPos))
-        {
-            Map.Move(this, Position, newPos);
-            Position = newPos;  
-        }
-        return $"Poruszono {direction.ToString().ToLower()} do {newPos}.";
     }
+    public Point? Position { get; set; }
+    public object CurrentPosition { get; set; }
 
-    public void AssignMap(Map map, Point startPosition)
+    public Point Go(Direction direction)
     {
-        Map = map;
-        Position = startPosition;
-        map.Add(this, Position);
-    }
+        if (Map == null || Position == null)
+        {
+            Console.WriteLine($"[ERROR] Creature {Name} has invalid Map or Position. Map: {Map}, Position: {Position}");
+            throw new InvalidOperationException("Creature must be placed on a map with a valid position before moving.");
+        }
+       
+        Point newPosition = Map.Move(this, Position.Value, direction);
+        Position = newPosition;
+        return newPosition;
+    }   
 }
     
 

@@ -13,14 +13,14 @@ public class Animals
                 _description = _description.Trim();
                 if (_description.Length > 15)
                 {
-                    _description = _description.Substring(0, 15).TrimEnd();
+                    _description = _description[..15].TrimEnd();
                 }
                 if (_description.Length < 3)
                 {
                     _description = _description.PadRight(3, '#');
                 }
 
-                _description = char.ToUpper(_description[0]) + _description.Substring(1);
+            _description = char.ToUpper(_description[0]) + _description[1..];
             }
         }
        

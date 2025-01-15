@@ -1,7 +1,13 @@
-﻿namespace Simulator;
+﻿
+namespace Simulator;
 
 public static class DirectionParser
 {
+    public static object FullDirectionName(Direction direction)
+    {
+        throw new NotImplementedException();
+    }
+
     public static List<Direction> Parse(string input)
     {
         var directions = new List<Direction>();

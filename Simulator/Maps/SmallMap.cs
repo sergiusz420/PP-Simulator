@@ -1,21 +1,23 @@
-﻿namespace Simulator.Maps
+﻿
+namespace Simulator.Maps
 {
     public  class SmallMap : Map
     {
-        protected SmallMap(int sizeX, int sizeY) : base(sizeX, sizeY)
+        public Point Point { get; }
+        protected SmallMap(Point point)
         {
-            if (sizeX > 20 || sizeY > 20)
+            if (point.X > 20 || point.Y > 20)
             {
                 throw new ArgumentOutOfRangeException("Maksymalna wielkość mapy to 20");
             }
+            Point = new Point(point.X, point.Y);
         }
 
         private Dictionary<Point, List<Creature>> creatures = new Dictionary<Point, List<Creature>>();
-        public int SizeX { get; }
-        public int SizeY { get; }
+     
         public override bool Exist(Point p)
         {
-            return p.X >= 0 && p.X < SizeX && p.Y >= 0 && p.Y < SizeY;
+            return p.X >= 0 && p.X < Point.X && p.Y >= 0 && p.Y < Point.Y;
         }
         public override Point Next(Point p, Direction d)
         {
@@ -36,10 +38,16 @@
             creatures[point].Add(creature);
         }
 
-        public override void Move(Creature creature, Point startpos, Point newpos)
+        public override Point Move(Creature creature, Point startpos, Direction direction)
         {
-            Remove(creature, startpos);
-            Add(creature, newpos);
+            Point newPosition = Next(startpos, direction); 
+            if (Exist(newPosition))
+            {
+                Remove(creature, startpos);
+                Add(creature, newPosition);
+                return newPosition;
+            }
+            return startpos; 
         }
 
         public override void Remove(Creature creature, Point point)
@@ -54,16 +62,9 @@
             }
         }
 
-        public override List<Creature> At(Point position)
+        public override IEnumerable<Creature> At(Point point)
         {
-            return creatures.ContainsKey(position) ? creatures[position] : new List<Creature>();
+            return creatures.TryGetValue(point, out List<Creature> list) ? list : Enumerable.Empty<Creature>();
         }
-
-        public List<Creature> At(int x, int y)
-        {
-            return At(new Point(x, y));
-        }
-
-
     }
 }
